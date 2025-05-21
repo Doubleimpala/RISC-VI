@@ -1,4 +1,4 @@
-//Here we have the register file.
+//Register file.
 //With 32 registers, each one 5 bit addressable, supporting 32 bit data.
 
 module register_file(input clk, rst, rw, 
