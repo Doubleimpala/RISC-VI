@@ -8,7 +8,7 @@
 | June 31 | Port Documentation over to GitHub \+ Plan a way to resume-ify it. |
 | July 25 | Finalize circuit design \+ software layout |
 | August 1 | Purchase breadboard materials and components |
-| August 10 | Send PCB Design to Kevin Lee |
+| August 10 | Send PCB Design to AIM Research Company. |
 | August 17 | Assemble processor |
 | September 5 | Finish OS Binary Code |
 | September 30 | Finish Assembly Language \+ Compiler |
@@ -22,15 +22,15 @@
 | Daily Progress  |  |  |  |
 | :---- | :---- | :---- | :---- |
 | ![Dates][image1] Date | ![No type][image2] Task | ![People][image3] Owner | ![Dropdowns][image4] Status |
-| May 20, 2025 | Set up doc | [Tanmay](mailto:garudadri.tanmay17@gmail.com)[jiaypotato@gmail.com](mailto:jiaypotato@gmail.com) | Approved |
-| May 21, 2025 | Draft up an ISA. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | In progress |
-|  |  | Person | Not started |
-|  |  | Person | Not started |
+| May 20, 2025 | Set up doc | [Tanmay](mailto:garudadri.tanmay17@gmail.com)[jiaypotato@gmail.com](mailto:jiaypotato@gmail.com) | Complete |
+| May 21, 2025 | Began ISA Draft. Drafted register file. Began ALU without pipelining. Added CPU core module definition. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Complete |
+| May 22, 2025 | Finish ALU pipelining \+ research what can be pipelined \+ how it works. Write more of the ISA. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Not started |
+| May 23, 2025 | Research memory caching and implement basic 4 byte addressable, 4 byte addressability memory. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Not started |
 
 ## **Processor Documentation**
 
 The RISC-VI Processor is a successor to the popular RISC-V processor. Based on the Von Neumann Architecture, it was designed and built using System Verilog in Xilinx Vivado.  
-Code Repository Github:
+Code Repository Github: https://github.com/Doubleimpala/RISC-VI
 
 ### Instruction Set Architecture
 
@@ -38,10 +38,21 @@ RISC-VI is a 32-bit architecture. Instructions are 32 bits long.
 
 #### Op-Codes \[5:0\]
 
-	
+	000000: BR  
+	000001:  
+	000010:
 
 #### Instruction Guide
 
+**J-Type:** Jump and Break Instructions:  
+	**BR**: Break  
+	Op-Code: 000000  
+	**P-Type:** Processing Instructions:  
+	**A-Type:**  
+	**TRAP:** TRAP Routine Call.  
+		**HALT:** Halt TRAP routine. Trap Vector: x0.  
+	Op-Code: 111111  
+	**Privileged:**  
 	
 
 ### Datapath Overview
@@ -52,12 +63,53 @@ Diagram:
 
 ### Processing Unit
 
+#### **Register file**
+
+	Contains 32 registers, each one 5 bit addressable, supporting 4 byte data.
+
+	Input signals:
+
+- clk: Processor clock signal.  
+- rst: Register reset signal  
+- rw: Read/Write signal. (R=0, W=1)  
+- \[4:0\] source1: Source register 1 address.  
+- \[4:0\] source2: Source register 2 address.  
+- \[4:0\] dest: Destination register address.  
+- \[31:0\] write\_data: 32 bits of data to be loaded into the destination register.
+
+	Output signals:
+
+- \[31:0\] read\_data1: Data from source register 1\.  
+- \[31:0\] read\_data2: Data from source register 2\.
+
+#### **ALU**
+
+	Performs 4 functions. Addition, subtraction, bitwise AND, bitwise OR.  
+	Input signals:
+
+- clk: Processor clock signal. (For future pipelining)  
+- \[2:0\] func: Function selection signal. Allows 8 functions.  
+- \[31:0\] operand\_1: First 4 byte operand.  
+- \[31:0\] operand\_2: Second 4 byte operand.
+
+	Output signals:
+
+- \[31:0\] result: 4 byte result of the operation.
+
+	Function guide:  
+key: \[2:0\] func inputs \-\> operation
+
+- 000 \-\> op1 \+ op2  
+- 001 \-\> op1 \- op2  
+- 010 \-\> op1 & op2  
+- 011 \-\> op1 | op2  
+- Default \-\> 32’b0
+
 ### Memory
 
-- L1 Cache  
-- 
-
 ### Bus
+
+	A 32 bit bus, and tri-state buffers.
 
 ### I/O
 
