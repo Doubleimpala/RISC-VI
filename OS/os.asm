@@ -1,0 +1,1 @@
+; Stand-in for OS code after an assembler is written.
