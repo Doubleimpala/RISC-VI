@@ -4,13 +4,11 @@
 
 | Deadline | Objective |
 | :---- | :---- |
-| June 30 | Finish RISC-IV Datapath \+ Vivado |
-| June 31 | Port Documentation over to GitHub \+ Plan a way to resume-ify it. |
-| July 25 | Finalize circuit design \+ software layout |
+| June 10 | Finish RISC-IV Datapath \+ Vivado |
+| September 5 | Finish OS Binary Code |
 | August 1 | Purchase breadboard materials and components |
 | August 10 | Send PCB Design to AIM Research Company. |
 | August 17 | Assemble processor |
-| September 5 | Finish OS Binary Code |
 | September 30 | Finish Assembly Language \+ Compiler |
 
 # 
@@ -24,8 +22,8 @@
 | ![Dates][image1] Date | ![No type][image2] Task | ![People][image3] Owner | ![Dropdowns][image4] Status |
 | May 20, 2025 | Set up doc | [Tanmay](mailto:garudadri.tanmay17@gmail.com)[jiaypotato@gmail.com](mailto:jiaypotato@gmail.com) | Complete |
 | May 21, 2025 | Began ISA Draft. Drafted register file. Began ALU without pipelining. Added CPU core module definition. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Complete |
-| May 22, 2025 | Finish ALU pipelining \+ research what can be pipelined \+ how it works. Write more of the ISA. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Not started |
-| May 23, 2025 | Research memory caching and implement basic 4 byte addressable, 4 byte addressability memory. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Not started |
+| May 22, 2025 | Research memory caching and implement basic 4 byte addressable, 4096 address space memory. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Complete |
+| May 23, 2025 | Finish ALU pipelining \+ research what can be pipelined \+ how it works. Write more of the ISA. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Not started |
 
 ## **Processor Documentation**
 
@@ -106,6 +104,46 @@ key: \[2:0\] func inputs \-\> operation
 - Default \-\> 32’b0
 
 ### Memory
+
+	**MAR:** Memory Address Register  
+		Size: 32 bits.  
+	  
+		Input signals:
+
+- clk: Processor clock signal.  
+- ld: Load signal from processor controller.  
+- \[31:0\] address\_in: 32 bit value connected directly to the bus.
+
+
+		Output signals:
+
+- \[31:0\] address\_out: Connects to the address decoder of the memory.
+
+	**Memory**:   
+32 bit addressable, 4096 bit address space.
+
+		Input signals:
+
+- clk: Processor clock signal.  
+- \[31:0\] address: 32 bit address truncated to \[11:0\].
+
+		Output signals:
+
+- \[31:0\] data: 32 bit value stored at address.
+
+	  
+**MDR:** Memory Data Register:  
+Size: 32 bits.
+
+Input signals:
+
+- clk: Processor clock signal.  
+- \[31:0\] data\_in: 32 bit data currently output by memory.
+
+
+		Output signals:
+
+- \[31:0\] data\_out: 32-bit data output to bus via tri-state buffer.
 
 ### Bus
 
