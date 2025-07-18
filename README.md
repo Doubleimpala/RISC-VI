@@ -4,16 +4,12 @@
 
 | Deadline | Objective |
 | :---- | :---- |
-| June 10 | Finish RISC-IV Datapath \+ Vivado |
+| June 25 | Finish RISC-IV Datapath \+ Vivado |
 | September 5 | Finish OS Binary Code |
 | August 1 | Purchase breadboard materials and components |
 | August 10 | Send PCB Design to AIM Research Company. |
 | August 17 | Assemble processor |
 | September 30 | Finish Assembly Language \+ Compiler |
-
-# 
-
-# 
 
 # **Documentation**
 
@@ -23,7 +19,8 @@
 | May 20, 2025 | Set up doc | [Tanmay](mailto:garudadri.tanmay17@gmail.com)[jiaypotato@gmail.com](mailto:jiaypotato@gmail.com) | Complete |
 | May 21, 2025 | Began ISA Draft. Drafted register file. Began ALU without pipelining. Added CPU core module definition. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Complete |
 | May 22, 2025 | Research memory caching and implement basic 4 byte addressable, 4096 address space memory. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Complete |
-| May 23, 2025 | Finish ALU pipelining \+ research what can be pipelined \+ how it works. Write more of the ISA. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Not started |
+| May 29, 2025 | Write more of the ISA. | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | Complete |
+| Jun 3, 2025 | Finish Un-privileged ISA | [Tanmay](mailto:garudadri.tanmay17@gmail.com) | In progress |
 
 ## **Processor Documentation**
 
@@ -34,36 +31,123 @@ Code Repository Github: https://github.com/Doubleimpala/RISC-VI
 
 RISC-VI is a 32-bit architecture. Instructions are 32 bits long.
 
-#### Op-Codes \[5:0\]
+#### Instruction Guide: 
 
-	000000: BR  
-	000001:  
-	000010:
-
-#### Instruction Guide
-
-**J-Type:** Jump and Break Instructions:  
-	**BR**: Break  
-	Op-Code: 000000  
+	Instruction layout:  
+Opcode: \[6:0\]  
+		Description: Instruction description.  
+		Encoding Format: Format for bits \[31:7\].  
+	  
 	**P-Type:** Processing Instructions:  
+	ADD: 
+
+- 0000001  
+- Adds the contents of two operand registers and stores result in the destination register.  
+  - 
+
+	SUB:
+
+- 0000010  
+- Subtracts the contents of the second operand register from the first operand register. Stores result in the destination register.  
+  - 
+
+	OR: 
+
+- 0000011  
+- Performs logical OR on the contents of two operand registers and stores result in the destination register.  
+  - 
+
+	AND:
+
+- 0000100  
+- Performs logical AND on the contents of two operand registers and stores result in the destination register.  
+  - 
+
+	  
+**J-Type:** Jump and Break Instructions:  
+	BRCC:
+
+- 0001000  
+- Conditional break. If condition codes match the 3 bit nzp operand condition, then this instruction adds an offset to the program counter.  
+  - \[9:7\] Operand condition  
+  - \[31:10\] imm25, 25 bit immediate signed offset.
+
+	BR:
+
+- 0001001  
+- Conditional break. If the value of the first operand register is greater than the second operand register, code p. If the values of both operand registers are equal, code z. If the value of the first operand register is less than the second operand register, code n.
+
+  If condition codes match the 3 bit nzp operand condition, then this instruction adds an offset to the program counter.
+
+  - \[9:7\] Operand condition  
+  - \[21:10\] 12 bit offset  
+  - \[26:22\] Operand Register 2  
+  - \[31:27\] Operand Register 1
+
+	JMP:
+
+- 0001010  
+- Unconditional jump. Stores PC in register x1.  
+  - .
+
+	RET:
+
+- 0001011  
+- Return from subprocess. Restores PC from register x1.  
+  - \[\]
+
+	  
+	**M-Type:** Memory Instructions:  
+	LD:
+
+- 0010000  
+- Loads the contents at the memory address \- found with program counter \+ offset- into the destination register.  
+  - 
+
+	LDR:
+
+- 0010001  
+- .  
+  - 
+
+	ST:
+
+- 0010010  
+- .  
+  - 
+
+	STR:
+
+- 0010011  
+- .  
+  - 
+
+	  
 	**A-Type:**  
-	**TRAP:** TRAP Routine Call.  
-		**HALT:** Halt TRAP routine. Trap Vector: x0.  
-	Op-Code: 111111  
+	TRAP**:** TRAP Routine Call.  
+		HALT**:** Halt TRAP routine. Trap Vector: x0.  
+		PUT:  
+		  
+	Op-Code: 0000000  
 	**Privileged:**  
-	
+	INT: Interrupt Routine Call.  
+		EXP: Exception Interrupt Routine. Int Vector: x0  
+	Op-Code: 
 
 ### Datapath Overview
 
-Diagram:
+Diagram: 
 
 ### Controller
+
+	
 
 ### Processing Unit
 
 #### **Register file**
 
-	Contains 32 registers, each one 5 bit addressable, supporting 4 byte data.
+	Contains 32 registers, each one 5 bit addressable, supporting 4 byte data.  
+	Register x0 is the zero register, automatically hardwired to 32’b0.
 
 	Input signals:
 
@@ -147,7 +231,14 @@ Input signals:
 
 ### Bus
 
-	A 32 bit bus, and tri-state buffers.
+	A 32 bit bus, and tri-state buffers for all inputs.
+
+	List of bus inputs via tri-state buffers:
+
+- MDR  
+- .  
+  List of bus outputs:  
+- 
 
 ### I/O
 
