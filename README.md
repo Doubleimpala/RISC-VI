@@ -1,5 +1,10 @@
 # RISC-VI Processor
 
+##(Official development log)[https://docs.google.com/document/d/1BpvCDp9Sc06AyrmLD5Pd1ziMohQwB4GcfsYSpvXccTI/edit?usp=sharing]
+The log is constantly updated wuth every change made to the processor files.
+It acts as the documentation, and changelog.
+
+
 ## Timeline
 
 | Deadline       | Objective                                      |
@@ -10,10 +15,6 @@
 | August 17     | Assemble processor                              |
 | September 5   | Finish OS Binary Code                           |
 | September 30  | Finish Assembly Language + Compiler             |
-
----
-
-## Documentation
 
 ### Daily Progress
 
