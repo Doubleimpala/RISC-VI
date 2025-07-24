@@ -1,6 +1,6 @@
 # RISC-VI Processor
 
-##(Official development log)[https://docs.google.com/document/d/1BpvCDp9Sc06AyrmLD5Pd1ziMohQwB4GcfsYSpvXccTI/edit?usp=sharing]
+## (Official development log)[https://docs.google.com/document/d/1BpvCDp9Sc06AyrmLD5Pd1ziMohQwB4GcfsYSpvXccTI/edit?usp=sharing]
 The log is constantly updated wuth every change made to the processor files.
 It acts as the documentation, and changelog.
 
